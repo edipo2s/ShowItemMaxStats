@@ -1798,17 +1798,17 @@ const items = [
     {
         "id": 2645,
         "Key": "War Bonnet",
-        "stats": "Def19"
+        "stats": ""
     },
     {
         "id": 2646,
         "Key": "Tarnhelm",
-        "stats": "Def11/50MF"
+        "stats": "50MF"
     },
     {
         "id": 2647,
         "Key": "Coif of Glory",
-        "stats": "Def28"
+        "stats": ""
     },
     {
         "id": 2648,
@@ -1818,7 +1818,7 @@ const items = [
     {
         "id": 2649,
         "Key": "Wormskull",
-        "stats": "Def36"
+        "stats": ""
     },
     {
         "id": 2650,
@@ -1833,27 +1833,27 @@ const items = [
     {
         "id": 2652,
         "Key": "The Face of Horror",
-        "stats": "Def52"
+        "stats": ""
     },
     {
         "id": 2653,
         "Key": "Greyform",
-        "stats": "Def31"
+        "stats": ""
     },
     {
         "id": 2654,
         "Key": "Blinkbats Form",
-        "stats": "Def42"
+        "stats": ""
     },
     {
         "id": 2655,
         "Key": "The Centurion",
-        "stats": "Def54"
+        "stats": ""
     },
     {
         "id": 2656,
         "Key": "Twitchthroe",
-        "stats": "Def60"
+        "stats": ""
     },
     {
         "id": 2657,
@@ -1893,7 +1893,7 @@ const items = [
     {
         "id": 2664,
         "Key": "Rattlecage",
-        "stats": "Def335"
+        "stats": ""
     },
     {
         "id": 2665,
@@ -2068,7 +2068,7 @@ const items = [
     {
         "id": 10122,
         "Key": "Civerb's Ward",
-        "stats": "Def29"
+        "stats": ""
     },
     {
         "id": 10123,
@@ -2083,12 +2083,12 @@ const items = [
     {
         "id": 10125,
         "Key": "Hsarus' Iron Heel",
-        "stats": "Def9"
+        "stats": ""
     },
     {
         "id": 10126,
         "Key": "Hsarus' Iron Fist",
-        "stats": "BDef6"
+        "stats": ""
     },
     {
         "id": 10127,
@@ -2103,12 +2103,12 @@ const items = [
     {
         "id": 10129,
         "Key": "Cleglaw's Claw",
-        "stats": "Def27"
+        "stats": ""
     },
     {
         "id": 10130,
         "Key": "Cleglaw's Pincers",
-        "stats": "Def9"
+        "stats": ""
     },
     {
         "id": 10131,
@@ -2118,12 +2118,12 @@ const items = [
     {
         "id": 10132,
         "Key": "Iratha's Coil",
-        "stats": "BDef45"
+        "stats": ""
     },
     {
         "id": 10133,
         "Key": "Iratha's Cuff",
-        "stats": "Def11"
+        "stats": ""
     },
     {
         "id": 10134,
@@ -2133,17 +2133,17 @@ const items = [
     {
         "id": 10135,
         "Key": "Isenhart's Horns",
-        "stats": "Def26"
+        "stats": ""
     },
     {
         "id": 10136,
         "Key": "Isenhart's Case",
-        "stats": "BDef68"
+        "stats": ""
     },
     {
         "id": 10137,
         "Key": "Isenhart's Parry",
-        "stats": "Def75"
+        "stats": ""
     },
     {
         "id": 10138,
@@ -2153,12 +2153,12 @@ const items = [
     {
         "id": 10140,
         "Key": "Vidala's Ambush",
-        "stats": "BDef17"
+        "stats": ""
     },
     {
         "id": 10141,
         "Key": "Vidala's Fetlock",
-        "stats": "Def11"
+        "stats": ""
     },
     {
         "id": 10142,
@@ -2173,7 +2173,7 @@ const items = [
     {
         "id": 10144,
         "Key": "Milabrega's Diadem",
-        "stats": "Def45"
+        "stats": ""
     },
     {
         "id": 10145,
@@ -2198,12 +2198,12 @@ const items = [
     {
         "id": 10149,
         "Key": "Cathan's Visage",
-        "stats": "BDef27"
+        "stats": ""
     },
     {
         "id": 10150,
         "Key": "Cathan's Mesh",
-        "stats": "Def90"
+        "stats": ""
     },
     {
         "id": 10151,
@@ -2218,12 +2218,12 @@ const items = [
     {
         "id": 10153,
         "Key": "Tancred's Spine",
-        "stats": "BDef161"
+        "stats": ""
     },
     {
         "id": 10154,
         "Key": "Tancred's Hobnails",
-        "stats": "Def3"
+        "stats": ""
     },
     {
         "id": 10155,
@@ -2233,12 +2233,12 @@ const items = [
     {
         "id": 10156,
         "Key": "Tancred's Skull",
-        "stats": "Def36"
+        "stats": ""
     },
     {
         "id": 10157,
         "Key": "Sigon's Visor",
-        "stats": "Def60"
+        "stats": ""
     },
     {
         "id": 10158,
@@ -2248,27 +2248,27 @@ const items = [
     {
         "id": 10159,
         "Key": "Sigon's Gage",
-        "stats": "Def15"
+        "stats": ""
     },
     {
         "id": 10160,
         "Key": "Sigon's Sabot",
-        "stats": "Def15"
+        "stats": ""
     },
     {
         "id": 10161,
         "Key": "Sigon's Wrap",
-        "stats": "BDef11"
+        "stats": ""
     },
     {
         "id": 10162,
         "Key": "Sigon's Guard",
-        "stats": "Def25"
+        "stats": ""
     },
     {
         "id": 10163,
         "Key": "Infernal Cranium",
-        "stats": "BDef5"
+        "stats": ""
     },
     {
         "id": 10164,
@@ -2283,12 +2283,12 @@ const items = [
     {
         "id": 10166,
         "Key": "Berserker's Headgear",
-        "stats": "Def33"
+        "stats": ""
     },
     {
         "id": 10167,
         "Key": "Berserker's Hauberk",
-        "stats": "BDef95"
+        "stats": ""
     },
     {
         "id": 10168,
@@ -2298,7 +2298,7 @@ const items = [
     {
         "id": 10169,
         "Key": "Death's Hand",
-        "stats": "Def3"
+        "stats": ""
     },
     {
         "id": 10170,
@@ -2348,7 +2348,7 @@ const items = [
     {
         "id": 10179,
         "Key": "Arctic Mitts",
-        "stats": "Def11"
+        "stats": ""
     },
     {
         "id": 10180,
@@ -2363,12 +2363,12 @@ const items = [
     {
         "id": 10182,
         "Key": "Arcanna's Head",
-        "stats": "BDef11"
+        "stats": ""
     },
     {
         "id": 10183,
         "Key": "Arcanna's Flesh",
-        "stats": "BDef107"
+        "stats": ""
     },
     {
         "id": 10911,
@@ -4328,7 +4328,7 @@ const items = [
     {
         "id": 21399,
         "Key": "Steelrend",
-        "stats": "Def281/60ED/210DEF/20STR"
+        "stats": "60ED/210DEF/20STR"
     },
     {
         "id": 21400,
@@ -4543,7 +4543,7 @@ const items = [
     {
         "id": 21442,
         "Key": "Griffon's Eye",
-        "stats": "Def260/-20LR/15LD/200DEF"
+        "stats": "-20LR/15LD/200DEF"
     },
     {
         "id": 21443,
@@ -4608,7 +4608,7 @@ const items = [
     {
         "id": 21455,
         "Key": "Headhunter's Glory",
-        "stats": "Def593/420DEF/350MDef/30FR/40PR/7LK/3S"
+        "stats": "420DEF/350MDef/30FR/40PR/7LK/3S"
     },
     {
         "id": 21456,
@@ -4933,7 +4933,7 @@ const items = [
     {
         "id": 21521,
         "Key": "Darksight Helm",
-        "stats": "BDef84/40FR"
+        "stats": "40FR"
     },
     {
         "id": 21522,
@@ -5198,7 +5198,7 @@ const items = [
     {
         "id": 21574,
         "Key": "Kira's Guardian",
-        "stats": "Def170/120DEF/70@Res"
+        "stats": "120DEF/70@Res"
     },
     {
         "id": 21575,
@@ -5293,7 +5293,7 @@ const items = [
     {
         "id": 21593,
         "Key": "Nosferatu's Coil",
-        "stats": "Def63/7LL"
+        "stats": "7LL"
     },
     {
         "id": 21594,
@@ -5318,7 +5318,7 @@ const items = [
     {
         "id": 21598,
         "Key": "Giantskull",
-        "stats": "Def477/320DEF/35STR/2S"
+        "stats": "320DEF/35STR/2S"
     },
     {
         "id": 21599,
@@ -5428,7 +5428,7 @@ const items = [
     {
         "id": 21621,
         "Key": "Stormshield",
-        "stats": "BDef148"
+        "stats": ""
     },
     {
         "id": 21622,
@@ -5438,7 +5438,7 @@ const items = [
     {
         "id": 21623,
         "Key": "Ormus' Robes",
-        "stats": "Def487/15CD/15LD/15FD/20DEF/15RegMana"
+        "stats": "15CD/15LD/15FD/20DEF/15RegMana"
     },
     {
         "id": 21624,
@@ -5458,7 +5458,7 @@ const items = [
     {
         "id": 21627,
         "Key": "Harlequin Crest",
-        "stats": "Def141"
+        "stats": ""
     },
     {
         "id": 21628,
@@ -5623,12 +5623,12 @@ const items = [
     {
         "id": 21661,
         "Key": "Trang-Oul's Guise",
-        "stats": "Def257/100DEF"
+        "stats": "100DEF"
     },
     {
         "id": 21662,
         "Key": "Trang-Oul's Wing",
-        "stats": "Def189/45FR"
+        "stats": "45FR"
     },
     {
         "id": 21663,
@@ -5643,17 +5643,17 @@ const items = [
     {
         "id": 21665,
         "Key": "Trang-Oul's Claws",
-        "stats": "Def74"
+        "stats": ""
     },
     {
         "id": 21666,
         "Key": "Trang-Oul's Girth",
-        "stats": "Def166/100DEF/50Mana"
+        "stats": "100DEF/50Mana"
     },
     {
         "id": 21668,
         "Key": "Natalya's Totem",
-        "stats": "Def300/175DEF/20STR/30DEX/20@Res"
+        "stats": "175DEF/20STR/30DEX/20@Res"
     },
     {
         "id": 21669,
@@ -5663,12 +5663,12 @@ const items = [
     {
         "id": 21670,
         "Key": "Natalya's Shadow",
-        "stats": "Def721/225DEF/3S"
+        "stats": "225DEF/3S"
     },
     {
         "id": 21671,
         "Key": "Natalya's Soul",
-        "stats": "Def169/125DEF/25CR/25LR"
+        "stats": "125DEF/25CR/25LR"
     },
     {
         "id": 21673,
@@ -5678,12 +5678,12 @@ const items = [
     {
         "id": 21674,
         "Key": "Griswold's Honor",
-        "stats": "Def333"
+        "stats": ""
     },
     {
         "id": 21675,
         "Key": "Griswold's Heart",
-        "stats": "Def950"
+        "stats": ""
     },
     {
         "id": 21676,
@@ -5783,12 +5783,12 @@ const items = [
     {
         "id": 21697,
         "Key": "Aldur's Stony Gaze",
-        "stats": "Def171/50CR"
+        "stats": "50CR"
     },
     {
         "id": 21698,
         "Key": "Aldur's Deception",
-        "stats": "Def857/50LR"
+        "stats": "50LR"
     },
     {
         "id": 21699,
@@ -5798,27 +5798,27 @@ const items = [
     {
         "id": 21700,
         "Key": "Aldur's Advance",
-        "stats": "Def47/50FR"
+        "stats": "50FR"
     },
     {
         "id": 21702,
         "Key": "M'avina's True Sight",
-        "stats": "Def210"
+        "stats": ""
     },
     {
         "id": 21703,
         "Key": "M'avina's Embrace",
-        "stats": "BDef523/12MDR"
+        "stats": "12MDR"
     },
     {
         "id": 21704,
         "Key": "M'avina's Icy Clutch",
-        "stats": "Def97/50DEF"
+        "stats": "50DEF"
     },
     {
         "id": 21705,
         "Key": "M'avina's Tenet",
-        "stats": "Def86"
+        "stats": ""
     },
     {
         "id": 21706,
@@ -5833,12 +5833,12 @@ const items = [
     {
         "id": 21709,
         "Key": "Sazabi's Ghost Liberator",
-        "stats": "Def917/75Life"
+        "stats": "75Life"
     },
     {
         "id": 21710,
         "Key": "Sazabi's Mental Sheath",
-        "stats": "Def184/20LR/20FR"
+        "stats": "20LR/20FR"
     },
     {
         "id": 21712,
@@ -5853,7 +5853,7 @@ const items = [
     {
         "id": 21714,
         "Key": "Hwanin's Refuge",
-        "stats": "Def390"
+        "stats": ""
     },
     {
         "id": 21715,
@@ -5868,27 +5868,27 @@ const items = [
     {
         "id": 21718,
         "Key": "Laying of Hands",
-        "stats": "Def87"
+        "stats": ""
     },
     {
         "id": 21719,
         "Key": "Rite of Passage",
-        "stats": "Def60/25MS"
+        "stats": "25MS"
     },
     {
         "id": 21720,
         "Key": "Spiritual Custodian",
-        "stats": "Def882/415DEF"
+        "stats": "415DEF"
     },
     {
         "id": 21721,
         "Key": "Credendum",
-        "stats": "Def115"
+        "stats": ""
     },
     {
         "id": 21723,
         "Key": "Cow King's Horns",
-        "stats": "Def128"
+        "stats": ""
     },
     {
         "id": 21724,
@@ -5898,7 +5898,7 @@ const items = [
     {
         "id": 21725,
         "Key": "Cow King's Hoofs",
-        "stats": "Def41/35DEF"
+        "stats": "35DEF"
     },
     {
         "id": 21726,
@@ -6143,7 +6143,7 @@ const items = [
     {
         "id": 21816,
         "Key": "Tal Rasha's Fire-Spun Cloth",
-        "stats": "BDef40/15MF"
+        "stats": "15MF"
     },
     {
         "id": 21817,
@@ -6153,7 +6153,7 @@ const items = [
     {
         "id": 21818,
         "Key": "Tal Rasha's Howling Wind",
-        "stats": "Def941"
+        "stats": ""
     },
     {
         "id": 21819,
@@ -6163,7 +6163,7 @@ const items = [
     {
         "id": 21820,
         "Key": "Tal Rasha's Horadric Crest",
-        "stats": "Def131"
+        "stats": ""
     },
     {
         "id": 21821,
@@ -6178,17 +6178,17 @@ const items = [
     {
         "id": 21824,
         "Key": "Ondal's Almighty",
-        "stats": "Def209"
+        "stats": ""
     },
     {
         "id": 21825,
         "Key": "Heaven's Taebaek",
-        "stats": "Def220"
+        "stats": ""
     },
     {
         "id": 21826,
         "Key": "Haemosu's Adament",
-        "stats": "Def702"
+        "stats": ""
     },
     {
         "id": 21827,
@@ -6213,12 +6213,12 @@ const items = [
     {
         "id": 21831,
         "Key": "Naj's Light Plate",
-        "stats": "Def830"
+        "stats": ""
     },
     {
         "id": 21832,
         "Key": "Naj's Circlet",
-        "stats": "Def105/35FD"
+        "stats": "35FD"
     },
     {
         "id": 21833,
@@ -6263,12 +6263,12 @@ const items = [
     {
         "id": 21841,
         "Key": "Immortal King's Pillar",
-        "stats": "BDef128"
+        "stats": ""
     },
     {
         "id": 21842,
         "Key": "Immortal King's Forge",
-        "stats": "BDef53"
+        "stats": ""
     },
     {
         "id": 21843,
@@ -6283,7 +6283,7 @@ const items = [
     {
         "id": 21845,
         "Key": "Immortal King's Will",
-        "stats": "Def175/40MF"
+        "stats": "40MF"
     },
     {
         "id": 21847,
@@ -6338,17 +6338,17 @@ const items = [
     {
         "id": 21876,
         "Key": "McAuley's Taboo",
-        "stats": "Def31/25DEF"
+        "stats": "25DEF"
     },
     {
         "id": 21877,
         "Key": "McAuley's Riprap",
-        "stats": "Def6"
+        "stats": ""
     },
     {
         "id": 21878,
         "Key": "McAuley's Paragon",
-        "stats": "BDef5"
+        "stats": ""
     },
     {
         "id": 22485,
