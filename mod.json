@@ -1,0 +1,29 @@
+{
+  "name": "Show Item Max Stats",
+  "description": "Show max stats info bellow item names.",
+  "author": "Edipo",
+  "website": "",
+  "version": "1.0",
+  "config": [
+    {
+      "id": "maxStatsColor",
+      "type": "select",
+      "name": "Color",
+      "defaultValue": "gray",
+      "options": [
+        { "label": "none", "value": "ÿc=" },
+        { "label": "white", "value": "ÿc0" },
+        { "label": "red", "value": "ÿc1" },
+        { "label": "green", "value": "ÿc2" },
+        { "label": "blue", "value": "ÿc3" },
+        { "label": "light blue", "value": "ÿcN" },
+        { "label": "gold", "value": "ÿc4" },
+        { "label": "gray", "value": "ÿc5" },
+        { "label": "tan", "value": "ÿc7" },
+        { "label": "orange", "value": "ÿc8" },
+        { "label": "yellow", "value": "ÿc9" },
+        { "label": "purple", "value": "ÿc;" }
+      ]
+    }
+  ]
+}
