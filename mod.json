@@ -24,6 +24,27 @@
         { "label": "yellow", "value": "ÿc9" },
         { "label": "purple", "value": "ÿc;" }
       ]
+    },
+    {
+      "id": "basesEnabled",
+      "type": "checkbox",
+      "name": "Show max def for armors Base type",
+      "description": "Show max defense value for the base armor type",
+      "defaultValue": true
+    },
+    {
+      "id": "setsEnabled",
+      "type": "checkbox",
+      "name": "Show max stats for Set items",
+      "description": "Show max stats for set items affixes with variable values",
+      "defaultValue": true
+    },
+    {
+      "id": "uniquesEnabled",
+      "type": "checkbox",
+      "name": "Show max stats for Unique items",
+      "description": "Show max stats for unique items affixes with variable values",
+      "defaultValue": true
     }
   ]
 }

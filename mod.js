@@ -13,6 +13,22 @@ const uniqueItemsFilePath = 'global\\excel\\uniqueitems.txt';
 const uniqueItems = D2RMM.readTsv(uniqueItemsFilePath);
 const uniqueItemsNames = uniqueItems.rows.map(row => row.index);
 
+const langs = [
+    "enUS",
+    "zhTW",
+    "deDE",
+    "esES",
+    "frFR",
+    "itIT",
+    "koKR",
+    "plPL",
+    "esMX",
+    "jaJP",
+    "ptBR",
+    "ruRU",
+    "zhCN"
+]
+
 const items = [
     {
         "id": 1930,
@@ -6341,61 +6357,59 @@ const items = [
     }
 ]
 
-const db = prepareDB(items);
+const db = items.reduce((acc, v) => {
+  acc[v["id"]] = v;
+  return acc;
+}, {});
 
 const itemNamesFilename = 'local\\lng\\strings\\item-names.json';
 const itemNames = D2RMM.readJson(itemNamesFilename);
-itemNames.forEach(processItem);
+itemNames.forEach(processItemName);
 D2RMM.writeJson(itemNamesFilename, itemNames);
 
 
-function processItem(item) {
+function formatName(text) {
+  armorMaxDef = armorsMaxDefs[key]
+  if (armorMaxDef) {
+    return `${text} ${config.maxStatsColor}•Def${armorsMaxDefs[key]}•`
+  }
+
+  stats = db[id]["stats"] || armorMaxDef
+  if (stats) {
+    return `${config.maxStatsColor}•${stats}•\n${nameColor}${text}`;
+  }
+  return `${nameColor}${text}`;
+}
+
+function getNameColor(key) {
+    if (setItemsNames.includes(key)) {
+        return "ÿcC" ;
+    }
+    if (uniqueItemsNames.includes(key)) {
+        return "ÿcD" ;
+    }
+    return "ÿc=";
+}
+
+function processItemName(item) {
     id = item["id"];
     key = item["Key"];
 
-    if (db[id]) {
-      nameColor = "ÿc=";
-      if (setItemsNames.includes(key)) {
-        nameColor = "ÿcC" ;     
-      }
-      if (uniqueItemsNames.includes(key)) {
-        nameColor = "ÿcD" ;     
-      }
-
-        function formatName(text) {
-          armorMaxDef = armorsMaxDefs[key]
-          if (armorMaxDef) {
-            return `${text} ${config.maxStatsColor}•Def${armorsMaxDefs[key]}•`
-          }
-
-          stats = db[id]["stats"] || armorMaxDef
-          if (stats) {
-            return `${config.maxStatsColor}•${stats}•\n${nameColor}${text}`;
-          }
-          return `${nameColor}${text}`;
-        }
-
-        item["enUS"] = formatName(item["enUS"]);
-        item["zhTW"] = formatName(item["zhTW"]);
-        item["deDE"] = formatName(item["deDE"]);
-        item["esES"] = formatName(item["esES"]);
-        item["frFR"] = formatName(item["frFR"]);
-        item["itIT"] = formatName(item["itIT"]);
-        item["koKR"] = formatName(item["koKR"]);
-        item["plPL"] = formatName(item["plPL"]);
-        item["esMX"] = formatName(item["esMX"]);
-        item["jaJP"] = formatName(item["jaJP"]);
-        item["ptBR"] = formatName(item["ptBR"]);
-        item["ruRU"] = formatName(item["ruRU"]);
-        item["zhCN"] = formatName(item["zhCN"]);
+    if (key in armorsMaxDefs && !config.basesEnabled) {
+        return; 
     }
-}
+    if (setItemsNames.includes(key) && !config.setsEnabled) {
+        return; 
+    }
+    if (uniqueItemsNames.includes(key) && !config.uniquesEnabled) {
+        return;
+    }
 
-function prepareDB(list) {
-    var db = {};
-    list.forEach(element => {
-        db[element['id']] = element;
-    });
+    if (db[id]) {
+        nameColor = getNameColor(key)
 
-    return db;
+        for (let lang of langs) {
+            item[lang] = formatName(item[lang]);
+        }
+    }
 }
