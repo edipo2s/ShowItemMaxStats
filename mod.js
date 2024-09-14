@@ -13,6 +13,11 @@ const uniqueItemsFilePath = 'global\\excel\\uniqueitems.txt';
 const uniqueItems = D2RMM.readTsv(uniqueItemsFilePath);
 const uniqueItemsNames = uniqueItems.rows.map(row => row.index);
 
+normalItemColor = "ÿc="
+magicItemColor = "ÿcB"
+setItemColor = "ÿcC"
+uniqueItemColor = "ÿcD"
+
 const langs = [
     "enUS",
     "zhTW",
@@ -6367,49 +6372,86 @@ const itemNames = D2RMM.readJson(itemNamesFilename);
 itemNames.forEach(processItemName);
 D2RMM.writeJson(itemNamesFilename, itemNames);
 
+function formatBaseName(key, text) {
+    const maxStatsColor = config.maxStatsColor
 
-function formatName(text) {
-  armorMaxDef = armorsMaxDefs[key]
-  if (armorMaxDef) {
-    return `${text} ${config.maxStatsColor}•Def${armorsMaxDefs[key]}•`
-  }
-
-  stats = db[id]["stats"] || armorMaxDef
-  if (stats) {
-    return `${config.maxStatsColor}•${config.maxStatsPrefix}${stats}•\n${nameColor}${text}`;
-  }
-  return `${nameColor}${text}`;
+    const armorMaxDef = armorsMaxDefs[key]
+    if (armorMaxDef) {
+        const defStatsText = `•Def${armorMaxDef}•`
+        return `${text} ${maxStatsColor}${defStatsText}`
+    }
 }
 
-function getNameColor(key) {
-    if (setItemsNames.includes(key)) {
-        return "ÿcC" ;
+function formatSetItemName(key, id, text) {
+    const maxStatsColor = config.setsMaxStatsColor
+
+    const itemNameColor = maxStatsColor ? setItemColor : ""
+    const usingBottomPosition = config.uniqueMaxStatsPosition == "bottom"
+
+    const stats = db[id]["stats"]
+    if (stats) {
+        const maxStatsText = `•${config.maxStatsPrefix}${stats}•`
+        if (usingBottomPosition) {
+            return `${maxStatsColor}${maxStatsText}\n${itemNameColor}${text}`;
+        } else {
+            return `${text}\n${maxStatsColor}${maxStatsText}`;
+        }
     }
-    if (uniqueItemsNames.includes(key)) {
-        return "ÿcD" ;
+    // Keep set item name with green color
+    if (usingBottomPosition) {
+        return `${itemNameColor}${text}`;
     }
-    return "ÿc=";
+    return text;
+}
+
+function formatUniqueItemName(key, id, text) {
+    const itemNameColor = uniqueItemColor
+    const maxStatsColor = config.maxStatsColor
+
+    const stats = db[id]["stats"]
+    if (stats) {
+        const maxStatsText = `•${config.maxStatsPrefix}${stats}•`
+
+        if (config.uniqueMaxStatsPosition == "bottom") {
+            return `${maxStatsColor}${maxStatsText}\n${itemNameColor}${text}`;
+        } else {
+            return `${text}\n${maxStatsColor}${maxStatsText}`;
+        }
+    }
+    return text;
 }
 
 function processItemName(item) {
-    id = item["id"];
-    key = item["Key"];
+    const id = item["id"];
+    const key = item["Key"];
+    const isBaseName = !!armorsMaxDefs[key]
+    const isSetItem = setItemsNames.includes(key)
+    const isUniqueItem = uniqueItemsNames.includes(key)
 
     if (key in armorsMaxDefs && !config.basesEnabled) {
         return; 
     }
-    if (setItemsNames.includes(key) && !config.setsEnabled) {
+    if (isSetItem && !config.setsEnabled) {
         return; 
     }
-    if (uniqueItemsNames.includes(key) && !config.uniquesEnabled) {
+    if (isUniqueItem && !config.uniquesEnabled) {
         return;
     }
 
     if (db[id]) {
-        nameColor = getNameColor(key)
-
         for (let lang of langs) {
-            item[lang] = formatName(item[lang]);
+            if (isBaseName) {
+                item[lang] = formatBaseName(key, item[lang])
+                continue;
+            }
+            if (isSetItem) {                
+                item[lang] = formatSetItemName(key, id, item[lang]);
+                continue;
+            }
+            if (isUniqueItem) {                
+                item[lang] = formatUniqueItemName(key, id, item[lang]);
+                continue;
+            }
         }
     }
 }

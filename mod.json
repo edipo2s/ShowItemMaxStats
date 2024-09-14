@@ -6,33 +6,6 @@
   "version": "1.0",
   "config": [
     {
-      "id": "maxStatsColor",
-      "type": "select",
-      "name": "Color",
-      "defaultValue": "gray",
-      "options": [
-        { "label": "none", "value": "ÿc=" },
-        { "label": "white", "value": "ÿc0" },
-        { "label": "red", "value": "ÿc1" },
-        { "label": "green", "value": "ÿc2" },
-        { "label": "blue", "value": "ÿc3" },
-        { "label": "light blue", "value": "ÿcN" },
-        { "label": "gold", "value": "ÿc4" },
-        { "label": "gray", "value": "ÿc5" },
-        { "label": "tan", "value": "ÿc7" },
-        { "label": "orange", "value": "ÿc8" },
-        { "label": "yellow", "value": "ÿc9" },
-        { "label": "purple", "value": "ÿc;" }
-      ]
-    },
-    {
-      "id": "maxStatsPrefix",
-      "type": "text",
-      "name": "Prefix text",
-      "defaultValue": "",
-      "description": "Adds a text at the start of the max stats line",
-    },
-    {
       "id": "basesEnabled",
       "type": "checkbox",
       "name": "Show max def for armors Base type",
@@ -52,6 +25,71 @@
       "name": "Show max stats for Unique items",
       "description": "Show max stats for unique items affixes with variable values",
       "defaultValue": true
+    },
+    {
+      "id": "maxStatsColor",
+      "type": "select",
+      "name": "Max Stats Color for Unique Items",
+      "defaultValue": "ÿc5",
+      "options": [
+        { "label": "none", "value": "" },
+        { "label": "white", "value": "ÿc0" },
+        { "label": "red", "value": "ÿc1" },
+        { "label": "green", "value": "ÿc2" },
+        { "label": "blue", "value": "ÿc3" },
+        { "label": "light blue", "value": "ÿcN" },
+        { "label": "gold", "value": "ÿc4" },
+        { "label": "gray", "value": "ÿc5" },
+        { "label": "tan", "value": "ÿc7" },
+        { "label": "orange", "value": "ÿc8" },
+        { "label": "yellow", "value": "ÿc9" },
+        { "label": "purple", "value": "ÿc;" }
+      ]
+    },
+    {
+      "id": "setsMaxStatsColor",
+      "type": "select",
+      "name": "Max Stats Color for Set Items",
+      "description": "Changing the color will avoid missing set pieces name be colored as red when using position Bellow item's name",
+      "defaultValue": "",
+      "options": [
+        { "label": "none", "value": "", "description": "Keep missing set pieces colored as red" },
+        { "label": "white", "value": "ÿc0" },
+        { "label": "red", "value": "ÿc1" },
+        { "label": "green", "value": "ÿc2" },
+        { "label": "blue", "value": "ÿc3" },
+        { "label": "light blue", "value": "ÿcN" },
+        { "label": "gold", "value": "ÿc4" },
+        { "label": "gray", "value": "ÿc5" },
+        { "label": "tan", "value": "ÿc7" },
+        { "label": "orange", "value": "ÿc8" },
+        { "label": "yellow", "value": "ÿc9" },
+        { "label": "purple", "value": "ÿc;" }
+      ]
+    },
+    {
+      "id": "maxStatsPrefix",
+      "type": "text",
+      "name": "Prefix text",
+      "defaultValue": "",
+      "description": "Adds a text at the start of the max stats line"
+    },
+    {
+      "id": "uniqueMaxStatsPosition",
+      "type": "select",
+      "name": "Max stats position for unique and sets",
+      "defaultValue": "bottom",
+      "options": [
+        {
+          "label": "Above item's name", 
+          "value": "top"
+        },
+        {
+          "label": "Bellow item's name",
+          "value": "bottom",
+          "description": "Set items will lose the missing set pieces red color if used with some Max Stats Color for Set Items"
+        }
+      ]
     }
   ]
 }
