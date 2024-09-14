@@ -6376,7 +6376,7 @@ function formatName(text) {
 
   stats = db[id]["stats"] || armorMaxDef
   if (stats) {
-    return `${config.maxStatsColor}•${stats}•\n${nameColor}${text}`;
+    return `${config.maxStatsColor}•${config.maxStatsPrefix}${stats}•\n${nameColor}${text}`;
   }
   return `${nameColor}${text}`;
 }

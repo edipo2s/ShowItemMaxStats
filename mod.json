@@ -26,6 +26,13 @@
       ]
     },
     {
+      "id": "maxStatsPrefix",
+      "type": "text",
+      "name": "Prefix text",
+      "defaultValue": "",
+      "description": "Adds a text at the start of the max stats line",
+    },
+    {
       "id": "basesEnabled",
       "type": "checkbox",
       "name": "Show max def for armors Base type",
