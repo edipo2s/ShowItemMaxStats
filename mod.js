@@ -13,6 +13,27 @@ const uniqueItemsFilePath = 'global\\excel\\uniqueitems.txt';
 const uniqueItems = D2RMM.readTsv(uniqueItemsFilePath);
 const uniqueItemsNames = uniqueItems.rows.map(row => row.index);
 
+const runesFilePath = 'global\\excel\\runes.txt';
+const runesItems = D2RMM.readTsv(runesFilePath);
+const runewordsByName = runesItems.rows.reduce((acc, v) => {
+    acc[v.Name] = v;
+    return acc;
+}, {});
+
+const itemStatCostFilePath = 'global\\excel\\itemStatCost.txt';
+const itemStatCostItems = D2RMM.readTsv(itemStatCostFilePath);
+const descPriorityByStatsCode = itemStatCostItems.rows.reduce((acc, v) => {
+    acc[v.Stat] = v.descpriority;
+    return acc;
+}, {});
+
+const propertiesFilePath = 'global\\excel\\properties.txt';
+const propertiesItems = D2RMM.readTsv(propertiesFilePath);
+const descPriorityByPropCode = propertiesItems.rows.reduce((acc, v) => {
+    acc[v.code] = +(descPriorityByStatsCode[v.stat1] || 0);
+    return acc;
+}, {});
+
 normalItemColor = "ÿc="
 magicItemColor = "ÿcB"
 setItemColor = "ÿcC"
@@ -33,6 +54,288 @@ const langs = [
     "ruRU",
     "zhCN"
 ]
+
+const statsSeparator = "-"
+
+const statsCodeMap = {
+    "ac": "Def",
+    "ac-hth": "DefMi",
+    "ac-miss": "DefMe",
+    "red-dmg": "DR",
+    "red-dmg%": "%DR",
+    "ac%": "ED",
+    "red-mag": "MDR",
+    "str": "Str",
+    "dex": "Dex",
+    "vit": "Vit",
+    "enr": "Enr",
+    "mana": "Mana",
+    "mana%": "%Mana",
+    "hp": "Life",
+    "hp%": "%Life",
+    "att": "AR",
+    "block": "IBC",
+    "cold-min": "minCD",
+    "cold-max": "maxCD",
+    "cold-len": "",
+    "fire-min": "minFD",
+    "fire-max": "maxFD",
+    "ltng-min": "minLD",
+    "ltng-max": "maxLD",
+    "pois-min": "minPD",
+    "pois-max": "maxPD",
+    "pois-len": "",
+    "dmg-min": "minDmg",
+    "dmg-max": "maxDmg",
+    "dmg%": "EDmg",
+    "dmg-to-mana": "DTM",
+    "res-fire": "FRes",
+    "res-fire-max": "maxFRes",
+    "res-ltng": "LRes",
+    "res-ltng-max": "maxLRes",
+    "res-cold": "CRes",
+    "res-cold-max": "maxCRes",
+    "res-mag": "MRes",
+    "res-mag-max": "maxMGes",
+    "res-pois": "PRes",
+    "res-pois-max": "maxPRes",
+    "res-all": "@Res",
+    "res-all-max": "max@Res",
+    "abs-fire%": "FA",
+    "abs-fire": "FA",
+    "abs-ltng%": "LA",
+    "abs-ltng": "LA",
+    "abs-mag%": "MA",
+    "abs-mag": "MA",
+    "abs-cold%": "CA",
+    "abs-cold": "CA",
+    "dur": "Dur",
+    "dur%": "%Dur",
+    "regen": "RepLife",
+    "thorns": "Thorns",
+    "swing1": "IAS",
+    "swing2": "IAS",
+    "swing3": "IAS",
+    "gold%": "GF",
+    "mag%": "MF",
+    "knock": "KB",
+    "regen-stam": "RegStm",
+    "regen-mana": "RegMana",
+    "stam": "Stm",
+    "time": "",
+    "manasteal": "ML",
+    "lifesteal": "LL",
+    "ama": "AmaSkls",
+    "pal": "PalSkls",
+    "nec": "NecSkls",
+    "sor": "SorSkls",
+    "bar": "BarSkls",
+    "herb": "",
+    "light": "LR",
+    "color": "",
+    "ease": "-Req",
+    "move1": "FRW",
+    "move2": "FRW",
+    "move3": "FRW",
+    "balance1": "FHR",
+    "balance2": "FHR",
+    "balance3": "FHR",
+    "block1": "FBR",
+    "block2": "FBR",
+    "block3": "FBR",
+    "cast1": "FCR",
+    "cast2": "FCR",
+    "cast3": "FCR",
+    "res-pois-len": "PLR",
+    "dmg": "Dmg",
+    "howl": "HitMF",
+    "stupidity": "HitBL",
+    "ignore-ac": "ITD",
+    "reduce-ac": "-TD",
+    "noheal": "PMH",
+    "half-freeze": "HFD",
+    "att%": "%AR",
+    "dmg-ac": "-DefHit",
+    "dmg-demon": "%DmgDem",
+    "dmg-undead": "%DmgUnd",
+    "att-demon": "%ARDem",
+    "att-undead": "%ARUnd",
+    "throw": "Throw",
+    "fireskill": "FireSkl",
+    "allskills": "@Skills",
+    "light-thorns": "LThorns",
+    "freeze": "FT",
+    "openwounds": "OW",
+    "crush": "CB",
+    "kick": "KickDmg",
+    "mana-kill": "MaeK",
+    "demon-heal": "LaeDK",
+    "bloody": "",
+    "deadly": "DS",
+    "slow": "ST",
+    "nofreeze": "CBF",
+    "stamdrain": "SSD",
+    "reanimate": "RnmtAs",
+    "pierce": "PA",
+    "magicarrow": "FMA",
+    "explosivearrow": "FEA",
+    "Expansion": "",
+    "dru": "DruSkls",
+    "ass": "AssSkls",
+    "skill": "Skls",
+    "skilltab": "SklsTab",
+    "aura": "AuraLvl",
+    "att-skill": "CCoA",
+    "hit-skill": "CCoH",
+    "gethit-skill": "CCoS",
+    "gembonus": "",
+    "regen-dur": "",
+    "fire-fx": "",
+    "ltng-fx": "",
+    "sock": "Skt",
+    "dmg-fire": "FDmg",
+    "dmg-ltng": "LDmg",
+    "dmg-mag": "MDmg",
+    "dmg-cold": "CDmg",
+    "dmg-pois": "PDmg",
+    "dmg-throw": "TDmg",
+    "dmg-norm": "NDmg",
+    "ac/lvl": "Def/lvl",
+    "ac%/lvl": "%Def/lvl",
+    "hp/lvl": "Life/lvl",
+    "mana/lvl": "Mana/lvl",
+    "dmg/lvl": "Dmg/lvl",
+    "dmg%/lvl": "%Dmg/lvl",
+    "str/lvl": "Str/lvl",
+    "dex/lvl": "Dex/lvl",
+    "enr/lvl": "Enr/lvl",
+    "vit/lvl": "Vit/lvl",
+    "att/lvl": "AR/lvl",
+    "att%/lvl": "%AR/lvl",
+    "dmg-cold/lvl": "CDmg/lvl",
+    "dmg-fire/lvl": "FDmg/lvl",
+    "dmg-ltng/lvl": "LDmg/lvl",
+    "dmg-pois/lvl": "PDmg/lvl",
+    "res-cold/lvl": "CRes/lvl",
+    "res-fire/lvl": "FRes/lvl",
+    "res-ltng/lvl": "LRes/lvl",
+    "res-pois/lvl": "PRes/lvl",
+    "abs-cold/lvl": "CAbs/lvl",
+    "abs-fire/lvl": "FAbs/lvl",
+    "abs-ltng/lvl": "LAbs/lvl",
+    "abs-pois/lvl": "PAbs/lvl",
+    "thorns/lvl": "Thorns/lvl",
+    "gold%/lvl": "GF/lvl",
+    "mag%/lvl": "MF/lvl",
+    "regen-stam/lvl": "RegStm/lvl",
+    "stam/lvl": "Stm/lvl",
+    "dmg-dem/lvl": "DmgDem/lvl",
+    "dmg-und/lvl": "DmgUnd/lvl",
+    "att-dem/lvl": "ARDem/lvl",
+    "att-und/lvl": "ARUnd/lvl",
+    "crush/lvl": "CB/lvl",
+    "wounds/lvl": "OW/lvl",
+    "kick/lvl": "Kick/lvl",
+    "deadly/lvl": "DS/lvl",
+    "gems%/lvl": "",
+    "rep-dur": "RD",
+    "rep-quant": "RQ",
+    "stack": "ISS",
+    "item%": "",
+    "dmg-slash": "",
+    "dmg-slash%": "",
+    "dmg-crush": "",
+    "dmg-crush%": "",
+    "dmg-thrust": "",
+    "dmg-thrust%": "",
+    "abs-slash": "",
+    "abs-crush": "",
+    "abs-thrust": "",
+    "abs-slash%": "",
+    "abs-crush%": "",
+    "abs-thrust%": "",
+    "ac/time": "",
+    "ac%/time": "",
+    "hp/time": "",
+    "mana/time": "",
+    "dmg/time": "",
+    "dmg%/time": "",
+    "str/time": "",
+    "dex/time": "",
+    "enr/time": "",
+    "vit/time": "",
+    "att/time": "",
+    "att%/time": "",
+    "dmg-cold/time": "",
+    "dmg-fire/time": "",
+    "dmg-ltng/time": "",
+    "dmg-pois/time": "",
+    "res-cold/time": "",
+    "res-fire/time": "",
+    "res-ltng/time": "",
+    "res-pois/time": "",
+    "abs-cold/time": "",
+    "abs-fire/time": "",
+    "abs-ltng/time": "",
+    "abs-pois/time": "",
+    "gold%/time": "",
+    "mag%/time": "",
+    "regen-stam/time": "",
+    "stam/time": "",
+    "dmg-dem/time": "",
+    "dmg-und/time": "",
+    "att-dem/time": "",
+    "att-und/time": "",
+    "crush/time": "",
+    "wounds/time": "",
+    "kick/time": "",
+    "deadly/time": "",
+    "gems%/time": "",
+    "pierce-fire": "%EFR",
+    "pierce-ltng": "%ELR",
+    "pierce-cold": "%ECR",
+    "pierce-pois": "%EPR",
+    "dmg-mon": "",
+    "dmg%-mon": "",
+    "att-mon": "",
+    "att%-mon": "",
+    "ac-mon": "",
+    "ac%-mon": "",
+    "indestruct": "Inds",
+    "charged": "lvlCS",
+    "extra-fire": "FSDmg",
+    "extra-ltng": "LSDmg",
+    "extra-cold": "CSDmg",
+    "extra-pois": "PSDmg",
+    "dmg-elem": "EDmg",
+    "dmg-elem-min": "minEDmg",
+    "dmg-elem-max": "maxEDmg",
+    "all-stats": "@Attr",
+    "addxp": "EG",
+    "heal-kill": "LaeK",
+    "cheap": "RVP",
+    "rip": "SMRiP",
+    "att-mon%": "ARvs",
+    "dmg-mon%": "DmgVs",
+    "kill-skill": "CCoK",
+    "death-skill": "CCoD",
+    "levelup-skill": "CCoL",
+    "skill-rand": "+Skl",
+    "fade": "",
+    "levelreq": "",
+    "ethereal": "Eth",
+    "oskill": "toSkl",
+    "state": "",
+    "randclassskill": "toSkls",
+    "noconsume": "",
+    "pierce-immunity-cold": "CSndr",
+    "pierce-immunity-fire": "FSndr",
+    "pierce-immunity-light": "LSndr",
+    "pierce-immunity-poison": "PSndr",
+    "pierce-immunity-damage": "DSndr",
+    "pierce-immunity-magic": "MSndr",
+    "charge-noconsume": "CnotCC"
+}
 
 const items = [
     {
@@ -6372,6 +6675,11 @@ const itemNames = D2RMM.readJson(itemNamesFilename);
 itemNames.forEach(processItemName);
 D2RMM.writeJson(itemNamesFilename, itemNames);
 
+const runesNamesFilename = 'local\\lng\\strings\\item-runes.json';
+const runesNames = D2RMM.readJson(runesNamesFilename);
+runesNames.forEach(processRunesName);
+D2RMM.writeJson(runesNamesFilename, runesNames);
+
 function formatBaseName(key, text) {
     const maxStatsColor = config.maxStatsColor
 
@@ -6404,11 +6712,11 @@ function formatSetItemName(key, id, text) {
     return text;
 }
 
-function formatUniqueItemName(key, id, text) {
+function formatUniqueItemName(key, maxStatsText, text) {
     const itemNameColor = uniqueItemColor
     const maxStatsColor = config.maxStatsColor
 
-    const stats = db[id]["stats"]
+    const stats = maxStatsText
     if (stats) {
         const maxStatsText = `•${config.maxStatsPrefix}${stats}•`
 
@@ -6449,8 +6757,56 @@ function processItemName(item) {
                 continue;
             }
             if (isUniqueItem) {                
-                item[lang] = formatUniqueItemName(key, id, item[lang]);
+                item[lang] = formatUniqueItemName(key, db[id]["stats"], item[lang]);
                 continue;
+            }
+        }
+    }
+}
+
+function getRunewordMaxStatsText(key) {
+    const data = runewordsByName[key]
+    const maxStats = {}
+
+    for (let i=1; i<=7; i++) {
+        minValue = data[`T1Min${i}`]
+        maxValue = data[`T1Max${i}`]
+        if (minValue === maxValue) {
+            continue;
+        }
+
+        const rawParam = data[`T1Param${i}`]
+        if (rawParam && !Number.isNaN(Number.parseInt(rawParam, 10))) {
+            continue;
+        }
+
+        const rawParamList = rawParam.split(/(?=[A-Z])/)
+        const param = rawParamList.length > 1
+            ? rawParamList.map(v => v[0]).join() 
+            : rawParamList[0].substring(0, 3)
+        const code = data[`T1Code${i}`]
+        const statsCode = param || statsCodeMap[code] || code
+
+        maxStats[code] = `${maxValue}${statsCode}`
+    }
+    
+    return Object.entries(maxStats)
+        .sort(([codeA, _a], [codeB, _b]) => 
+            (descPriorityByPropCode[codeB] || 0) - (descPriorityByPropCode[codeA] || 0)
+        )
+        .map(([_, maxStats]) => maxStats);
+}
+
+function processRunesName(item) {
+    const id = item["id"];
+    const key = item["Key"];
+
+    if (key.startsWith("Runeword")) {
+        for (let lang of langs) {
+            maxStats = getRunewordMaxStatsText(key)
+            if (maxStats.length) {                
+                maxStatsText = maxStats.join(statsSeparator)
+                item[lang] = formatUniqueItemName(key, maxStatsText, item[lang]);
             }
         }
     }

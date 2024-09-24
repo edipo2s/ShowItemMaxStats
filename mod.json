@@ -9,7 +9,7 @@
       "id": "basesEnabled",
       "type": "checkbox",
       "name": "Show max def for armors Base type",
-      "description": "Show max defense value for the base armor type",
+      "description": "Show max defense value for the base armor type. Side effect: will be in the middle of magic's item name.",
       "defaultValue": true
     },
     {
