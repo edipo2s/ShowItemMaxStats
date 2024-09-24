@@ -1,3 +1,6 @@
+const skillNamesFilename = 'local\\lng\\strings\\skills.json';
+const skillNames = D2RMM.readJson(skillNamesFilename);
+
 const armorsFilePath = 'global\\excel\\armor.txt';
 const armors = D2RMM.readTsv(armorsFilePath);
 const armorsMaxDefs = armors.rows.reduce((acc, v) => {
@@ -31,6 +34,21 @@ const propertiesFilePath = 'global\\excel\\properties.txt';
 const propertiesItems = D2RMM.readTsv(propertiesFilePath);
 const descPriorityByPropCode = propertiesItems.rows.reduce((acc, v) => {
     acc[v.code] = +(descPriorityByStatsCode[v.stat1] || 0);
+    return acc;
+}, {});
+
+const skillsFilePath = 'global\\excel\\skills.txt';
+const skillsItems = D2RMM.readTsv(skillsFilePath);
+const skillDescFilePath = 'global\\excel\\skilldesc.txt';
+const skillDescItems = D2RMM.readTsv(skillDescFilePath);
+const skillNameBySkill = skillsItems.rows.reduce((acc, v) => {
+    const skillDesc = skillDescItems.rows.find(r => r.skilldesc === v.skilldesc);
+    if (skillDesc) {
+        const skillName = skillDesc["str name"];
+        acc[v.skill] = skillNames.find(s => s["Key"] === skillName);
+    } else {
+        acc[v.skill] = v.skill;
+    }
     return acc;
 }, {});
 
@@ -6764,7 +6782,7 @@ function processItemName(item) {
     }
 }
 
-function getRunewordMaxStatsText(key) {
+function getRunewordMaxStatsText(key, lang) {
     const data = runewordsByName[key]
     const maxStats = {}
 
@@ -6780,12 +6798,15 @@ function getRunewordMaxStatsText(key) {
             continue;
         }
 
-        const rawParamList = rawParam.split(/(?=[A-Z])/)
-        const param = rawParamList.length > 1
-            ? rawParamList.map(v => v[0]).join() 
-            : rawParamList[0].substring(0, 3)
+        const skillLoc = skillNameBySkill[rawParam];
+        const skillFullName = (typeof skillLoc === "object" ? skillLoc[lang] : skillLoc)
+        const skillFullNameList = skillFullName?.split(/(?=[A-Z])/)
+        const skillShortName = skillFullNameList?.length > 1
+            ? skillFullNameList.map(v => v[0]).join("") 
+            : skillFullName?.substring(0, 3)
+
         const code = data[`T1Code${i}`]
-        const statsCode = param || statsCodeMap[code] || code
+        const statsCode = skillShortName || statsCodeMap[code] || code
 
         maxStats[code] = `${maxValue}${statsCode}`
     }
@@ -6803,7 +6824,7 @@ function processRunesName(item) {
 
     if (key.startsWith("Runeword")) {
         for (let lang of langs) {
-            maxStats = getRunewordMaxStatsText(key)
+            maxStats = getRunewordMaxStatsText(key, lang)
             if (maxStats.length) {                
                 maxStatsText = maxStats.join(statsSeparator)
                 item[lang] = formatUniqueItemName(key, maxStatsText, item[lang]);
