@@ -2,10 +2,17 @@ const skillNamesFilename = 'local\\lng\\strings\\skills.json';
 const skillNames = D2RMM.readJson(skillNamesFilename);
 
 const armorsFilePath = 'global\\excel\\armor.txt';
-const armors = D2RMM.readTsv(armorsFilePath);
-const armorsMaxDefs = armors.rows.reduce((acc, v) => {
+const armorItems = D2RMM.readTsv(armorsFilePath);
+const armorsMaxDefs = armorItems.rows.reduce((acc, v) => {
   acc[v.code] = v.maxac;
   return acc;
+}, {});
+
+const weaponsFilePath = 'global\\excel\\weapons.txt';
+const weaponsItems = D2RMM.readTsv(weaponsFilePath);
+const socketsByItemCode = (weaponsItems.rows.concat(armorItems.rows)).reduce((acc, v) => {
+    acc[v.code] = v.gemsockets;
+    return acc;
 }, {});
 
 const setItemsFilePath = 'global\\excel\\setitems.txt';
@@ -74,15 +81,6 @@ const skillNameBySkill = skillsItems.rows.reduce((acc, v) => {
     } else {
         acc[v.skill] = v.skill;
     }
-    return acc;
-}, {});
-
-const weaponsFilePath = 'global\\excel\\weapons.txt';
-const weaponsItems = D2RMM.readTsv(weaponsFilePath);
-const armorFilePath = 'global\\excel\\armor.txt';
-const armorItems = D2RMM.readTsv(armorFilePath);
-const socketsByItemCode = (weaponsItems.rows.concat(armorItems.rows)).reduce((acc, v) => {
-    acc[v.code] = v.gemsockets;
     return acc;
 }, {});
 
@@ -535,7 +533,7 @@ function processItemName(item) {
         if (isSetItem) {     
             const maxStats = getMaxStatsText(key, lang, setItemsByIndex, 9, "prop", "par", "min", "max");
             if (maxStats.length) {
-                const maxStatsText = maxStats.join(statsSeparator);           
+                const maxStatsText = maxStats.join(statsSeparator);
                 item[lang] = formatSetItemName(item[lang], maxStatsText);
             }
             continue;
@@ -560,7 +558,7 @@ function processRunesName(item) {
             maxStats = getMaxStatsText(key, lang, runewordsByName, 7, "T1Code", "T1Param", "T1Min", "T1Max");
             if (maxStats.length) {                
                 const maxStatsText = maxStats.join(statsSeparator)
-                item[lang] = formatUniqueItemName(key, maxStatsText, item[lang]);
+                item[lang] = formatUniqueItemName(item[lang], maxStatsText);
             }
         }
     }
