@@ -35,15 +35,30 @@ const descPriorityByStatsCode = itemStatCostItems.rows.reduce((acc, v) => {
     acc[v.Stat] = v.descpriority;
     return acc;
 }, {});
+const idByStatsCode = itemStatCostItems.rows.reduce((acc, v) => {
+    acc[v.Stat] = v.ID;
+    return acc;
+}, {});
+
+const fallbackStatByPropCode = {
+    "dmg-min": "item_mindamage_percent",
+    "dmg-max": "item_maxdamage_percent",
+    "dmg%": "item_mindamage_percent",
+    "indestruct": "item_indesctructible",
+}
 
 const propertiesFilePath = 'global\\excel\\properties.txt';
 const propertiesItems = D2RMM.readTsv(propertiesFilePath);
 const propDescPriorityByCode = propertiesItems.rows.reduce((acc, v) => {
-    acc[v.code] = +(descPriorityByStatsCode[v.stat1] || 200);
+    acc[v.code] = +(descPriorityByStatsCode[v.stat1 || fallbackStatByPropCode[v.code]] || 0);
     return acc;
 }, {});
 const propFuncByCode = propertiesItems.rows.reduce((acc, v) => {
     acc[v.code] = +v.func1;
+    return acc;
+}, {});
+const propIDByCode = propertiesItems.rows.reduce((acc, v) => {
+    acc[v.code] = +idByStatsCode[v.stat1];
     return acc;
 }, {});
 
@@ -451,7 +466,8 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
     
     return Object.entries(maxStats)
         .sort(([codeA, _a], [codeB, _b]) => 
-            (propDescPriorityByCode[codeB] || 0) - (propDescPriorityByCode[codeA] || 0)
+            ((propDescPriorityByCode[codeB] || 0) - (propDescPriorityByCode[codeA] || 0)) ||
+            (propIDByCode[codeA] - propIDByCode[codeB])
         )
         .map(([_, maxStats]) => maxStats);
 }
