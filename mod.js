@@ -38,8 +38,12 @@ const descPriorityByStatsCode = itemStatCostItems.rows.reduce((acc, v) => {
 
 const propertiesFilePath = 'global\\excel\\properties.txt';
 const propertiesItems = D2RMM.readTsv(propertiesFilePath);
-const descPriorityByPropCode = propertiesItems.rows.reduce((acc, v) => {
+const propDescPriorityByCode = propertiesItems.rows.reduce((acc, v) => {
     acc[v.code] = +(descPriorityByStatsCode[v.stat1] || 200);
+    return acc;
+}, {});
+const propFuncByCode = propertiesItems.rows.reduce((acc, v) => {
+    acc[v.code] = +v.func1;
     return acc;
 }, {});
 
@@ -370,6 +374,11 @@ const statsCodeMap = {
     "charge-noconsume": "CnotCC"
 }
 
+const propItemModsSetMin = 15;
+const propItemModsSetMax = 16;
+const ItemModsSetParam = 17;
+const fixedDmgProps = [propItemModsSetMin, propItemModsSetMax, ItemModsSetParam]
+
 const itemNamesFilename = 'local\\lng\\strings\\item-names.json';
 const itemNames = D2RMM.readJson(itemNamesFilename);
 itemNames.forEach(processItemName);
@@ -392,8 +401,7 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
 
     for (let i=1; i<=maxProps; i++) {
         const code = data[`${propPrefix}${i}`];
-        const isBaseDmg = code.startsWith("dmg") && (!code.endsWith("min") || !code.endsWith("max"));
-        if (isBaseDmg) {
+        if (fixedDmgProps.includes(propFuncByCode[code])) {
             continue;
         }
 
@@ -443,7 +451,7 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
     
     return Object.entries(maxStats)
         .sort(([codeA, _a], [codeB, _b]) => 
-            (descPriorityByPropCode[codeB] || 0) - (descPriorityByPropCode[codeA] || 0)
+            (propDescPriorityByCode[codeB] || 0) - (propDescPriorityByCode[codeA] || 0)
         )
         .map(([_, maxStats]) => maxStats);
 }
