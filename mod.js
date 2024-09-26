@@ -58,6 +58,15 @@ const skillNameBySkill = skillsItems.rows.reduce((acc, v) => {
     return acc;
 }, {});
 
+const weaponsFilePath = 'global\\excel\\weapons.txt';
+const weaponsItems = D2RMM.readTsv(weaponsFilePath);
+const armorFilePath = 'global\\excel\\armor.txt';
+const armorItems = D2RMM.readTsv(armorFilePath);
+const socketsByItemCode = (weaponsItems.rows.concat(armorItems.rows)).reduce((acc, v) => {
+    acc[v.code] = v.gemsockets;
+    return acc;
+}, {});
+
 normalItemColor = "ÿc="
 magicItemColor = "ÿcB"
 setItemColor = "ÿcC"
@@ -382,8 +391,20 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
     }
 
     for (let i=1; i<=maxProps; i++) {
-        minValue = data[`${minPrefix}${i}`]
-        maxValue = data[`${maxPrefix}${i}`]
+        const code = data[`${propPrefix}${i}`];
+        const isBaseDmg = code.startsWith("dmg") && (!code.endsWith("min") || !code.endsWith("max"));
+        if (isBaseDmg) {
+            continue;
+        }
+
+        const minValue = data[`${minPrefix}${i}`]
+        let maxValue = data[`${maxPrefix}${i}`]
+
+        // Some items is configured to have more sockets than possible by its base (e.g. Aldur's Rhythm)
+        if (code === "sock" ) {
+            maxValue = Math.min(data[`${maxPrefix}${i}`], socketsByItemCode[data.item]);
+        }
+
         if (minValue === maxValue) {
             continue;
         }
@@ -400,7 +421,6 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             ? skillFullNameList.map(v => v[0]).join("") 
             : skillFullName?.substring(0, 3);
 
-        const code = data[`${propPrefix}${i}`];
         // Store variable max value for min dmg
         if (code.endsWith("-min")) {
             min = maxValue;
