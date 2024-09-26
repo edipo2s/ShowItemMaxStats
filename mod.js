@@ -220,10 +220,10 @@ const statsCodeMap = {
     "half-freeze": "HFD",
     "att%": "%AR",
     "dmg-ac": "-DefHit",
-    "dmg-demon": "%DmgDem",
-    "dmg-undead": "%DmgUnd",
-    "att-demon": "%ARDem",
-    "att-undead": "%ARUnd",
+    "dmg-demon": "%DTD",
+    "dmg-undead": "%DTU",
+    "att-demon": "%ARAD",
+    "att-undead": "%ARAU",
     "throw": "Throw",
     "fireskill": "FireSkl",
     "allskills": "@Skills",
@@ -293,10 +293,10 @@ const statsCodeMap = {
     "mag%/lvl": "MF|lvl",
     "regen-stam/lvl": "RegStm|lvl",
     "stam/lvl": "Stm|lvl",
-    "dmg-dem/lvl": "DmgDem|lvl",
-    "dmg-und/lvl": "DmgUnd|lvl",
-    "att-dem/lvl": "ARDem|lvl",
-    "att-und/lvl": "ARUnd|lvl",
+    "dmg-dem/lvl": "DTD|lvl",
+    "dmg-und/lvl": "DTU|lvl",
+    "att-dem/lvl": "ARAD|lvl",
+    "att-und/lvl": "ARAU|lvl",
     "crush/lvl": "CB|lvl",
     "wounds/lvl": "OW|lvl",
     "kick/lvl": "Kick|lvl",
@@ -401,10 +401,16 @@ const statsCodeMap = {
     "charge-noconsume": "CnotCC"
 }
 
+const propItemModsSetSkillOnAttack = 11;
 const propItemModsSetMin = 15;
 const propItemModsSetMax = 16;
-const ItemModsSetParam = 17;
-const fixedDmgProps = [propItemModsSetMin, propItemModsSetMax, ItemModsSetParam]
+const propItemModsSetParam = 17;
+const fixedDmgProps = [
+    propItemModsSetSkillOnAttack,
+    propItemModsSetMin,
+    propItemModsSetMax,
+    propItemModsSetParam
+]
 
 const itemNamesFilename = 'local\\lng\\strings\\item-names.json';
 const itemNames = D2RMM.readJson(itemNamesFilename);
