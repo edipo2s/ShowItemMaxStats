@@ -73,6 +73,20 @@ const skillsFilePath = 'global\\excel\\skills.txt';
 const skillsItems = D2RMM.readTsv(skillsFilePath);
 const skillDescFilePath = 'global\\excel\\skilldesc.txt';
 const skillDescItems = D2RMM.readTsv(skillDescFilePath);
+const skillIdByCode = skillsItems.rows.reduce((acc, v) => {
+    acc[v.skill] = v["*Id"];
+    return acc;
+}, {});
+const skillNameById = skillsItems.rows.reduce((acc, v) => {
+    const skillDesc = skillDescItems.rows.find(r => r.skilldesc === v.skilldesc);
+    if (skillDesc) {
+        const skillName = skillDesc["str name"];
+        acc[v["*Id"]] = skillNames.find(s => s["Key"] === skillName);
+    } else {
+        acc[v["*Id"]] = v.skill;
+    }
+    return acc;
+}, {});
 const skillNameBySkill = skillsItems.rows.reduce((acc, v) => {
     const skillDesc = skillDescItems.rows.find(r => r.skilldesc === v.skilldesc);
     if (skillDesc) {
@@ -414,6 +428,8 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
 
     for (let i=1; i<=maxProps; i++) {
         const code = data[`${propPrefix}${i}`];
+
+        // Skip if dmg mod is a fixed one
         if (fixedDmgProps.includes(propFuncByCode[code])) {
             continue;
         }
@@ -421,7 +437,7 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
         const minValue = data[`${minPrefix}${i}`]
         let maxValue = data[`${maxPrefix}${i}`]
 
-        // Some items is configured to have more sockets than possible by its base (e.g. Aldur's Rhythm)
+        // Some items is configured to have more sockets than possible by its base (e.g. Aldur's Rhythm with 5)
         if (code === "sock" ) {
             maxValue = Math.min(data[`${maxPrefix}${i}`], socketsByItemCode[data.item]);
         }
@@ -431,16 +447,21 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
         }
 
         const rawParam = data[`${paramPrefix}${i}`]
-        if (rawParam && !Number.isNaN(Number.parseInt(rawParam, 10))) {
+        const isRawParamNumber = !Number.isNaN(Number.parseInt(rawParam, 10));
+        if (rawParam && isRawParamNumber && code !== "skill") {
             continue;
         }
 
-        const skillLoc = skillNameBySkill[rawParam];
+        const skillLoc = code === "skill" ? skillNameById[rawParam] : skillNameBySkill[rawParam];
         const skillFullName = (typeof skillLoc === "object" ? skillLoc[lang] : skillLoc);
         const skillFullNameList = skillFullName?.split(/(?=[A-Z])/);
         const skillShortName = skillFullNameList?.length > 1
             ? skillFullNameList.map(v => v[0]).join("") 
             : skillFullName?.substring(0, 3);
+
+        const skillId = code === "skill" 
+            ? +rawParam
+            : code === "oskill" ? +skillIdByCode[rawParam] : 0;
 
         // Store variable max value for min dmg
         if (code.endsWith("-min")) {
@@ -459,7 +480,10 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             statsCode += "mg";
         }
 
-        maxStats[code] = `${maxValue}${statsCode}`;
+        if (!maxStats[code]) {
+            maxStats[code] = [];
+        }
+        maxStats[code].push({ skillId, text: `${maxValue}${statsCode}` });
     }
     
     return Object.entries(maxStats)
@@ -467,7 +491,11 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             ((propDescPriorityByCode[codeB] || 0) - (propDescPriorityByCode[codeA] || 0)) ||
             (propIDByCode[codeA] - propIDByCode[codeB])
         )
-        .map(([_, maxStats]) => maxStats);
+        .map(([_, maxStats]) => {
+            // Sort multiple skills by its skill id
+            const sortedMaxStats = maxStats.sort((a, b) => +b.skillId - a.skillId);
+            return sortedMaxStats.map(ms => ms.text).join(statsSeparator)
+        });
 }
 
 function formatBaseName(key, text) {
