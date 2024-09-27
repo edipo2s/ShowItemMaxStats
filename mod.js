@@ -405,11 +405,11 @@ const propItemModsSetSkillOnAttack = 11;
 const propItemModsSetMin = 15;
 const propItemModsSetMax = 16;
 const propItemModsSetParam = 17;
-const fixedDmgProps = [
+const propItemModsSetChargedSkill = 19;
     propItemModsSetSkillOnAttack,
     propItemModsSetMin,
     propItemModsSetMax,
-    propItemModsSetParam
+    propItemModsSetParam,
 ]
 
 const itemNamesFilename = 'local\\lng\\strings\\item-names.json';
@@ -435,8 +435,8 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
     for (let i=1; i<=maxProps; i++) {
         const code = data[`${propPrefix}${i}`];
 
-        // Skip if dmg mod is a fixed one
-        if (fixedDmgProps.includes(propFuncByCode[code])) {
+        // Skip min max values for non ranged mods
+        if (nonRangedProps.includes(propFuncByCode[code])) {
             continue;
         }
 
