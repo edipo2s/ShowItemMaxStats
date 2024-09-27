@@ -359,6 +359,7 @@ const statsCodeMap = {
     "pierce-ltng": "%ELR",
     "pierce-cold": "%ECR",
     "pierce-pois": "%EPR",
+    "pierce-elem": "%E*R",      // Not from game
     "dmg-mon": "",
     "dmg%-mon": "",
     "att-mon": "",
@@ -367,10 +368,11 @@ const statsCodeMap = {
     "ac%-mon": "",
     "indestruct": "Inds",
     "charged": "lvlCS",
-    "extra-fire": "FSDmg",
-    "extra-ltng": "LSDmg",
-    "extra-cold": "CSDmg",
-    "extra-pois": "PSDmg",
+    "extra-fire": "%FSDmg",
+    "extra-ltng": "%LSDmg",
+    "extra-cold": "%CSDmg",
+    "extra-pois": "%PSDmg",
+    "extra-elem": "%*SDmg",     // Not from game
     "dmg-elem": "EDmg",
     "dmg-elem-min": "EDmg",
     "dmg-elem-max": "EDmg",
@@ -400,6 +402,14 @@ const statsCodeMap = {
     "pierce-immunity-magic": "MSndr",
     "charge-noconsume": "CnotCC"
 }
+
+const negativeStats = [
+    "pierce-fire",
+    "pierce-ltng",
+    "pierce-cold",
+    "pierce-pois",
+    "pierce-elem"
+]
 
 const propItemModsSetSkillOnAttack = 11;
 const propItemModsSetMin = 15;
@@ -491,10 +501,22 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             statsCode += "mg";
         }
 
+        // Use generic stats for Rainbow Facet since all have same name
+        if (key === "Rainbow Facet") {
+            if (code.startsWith("pierce-")) {
+                statsCode = statsCodeMap["pierce-elem"];
+            }
+            if (code.startsWith("extra-")) {
+                statsCode = statsCodeMap["extra-elem"];
+            }
+        }
+
+        const prefix = negativeStats.includes(code) ? "-" : "";
+
         if (!maxStats[code]) {
             maxStats[code] = [];
         }
-        maxStats[code].push({ skillId, text: `${maxValue}${statsCode}` });
+        maxStats[code].push({ skillId, text: `${prefix}${maxValue}${statsCode}` });
     }
     
     return Object.entries(maxStats)
