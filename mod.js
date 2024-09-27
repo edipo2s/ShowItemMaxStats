@@ -406,10 +406,15 @@ const propItemModsSetMin = 15;
 const propItemModsSetMax = 16;
 const propItemModsSetParam = 17;
 const propItemModsSetChargedSkill = 19;
+const propItemModsSetValueRegPropValParamSwapped = 36;
+
+const nonRangedProps = [
     propItemModsSetSkillOnAttack,
     propItemModsSetMin,
     propItemModsSetMax,
     propItemModsSetParam,
+    propItemModsSetChargedSkill,
+    propItemModsSetValueRegPropValParamSwapped
 ]
 
 const itemNamesFilename = 'local\\lng\\strings\\item-names.json';
