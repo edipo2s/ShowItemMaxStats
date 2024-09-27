@@ -448,6 +448,13 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
 
     const allCodes = [];
     for (let i=1; i<=maxProps; i++) {
+        const minValue = data[`${minPrefix}${i}`]
+        let maxValue = data[`${maxPrefix}${i}`]
+
+        if (minValue === maxValue) {
+            continue;
+        }
+
         allCodes.push(data[`${propPrefix}${i}`]);
     }
 
