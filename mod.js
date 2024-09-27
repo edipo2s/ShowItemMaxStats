@@ -458,9 +458,11 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
         const minValue = data[`${minPrefix}${i}`]
         let maxValue = data[`${maxPrefix}${i}`]
 
-        // Some items is configured to have more sockets than possible by its base (e.g. Aldur's Rhythm with 5)
+        // Some items is configured to have more sockets than possible by its base
+        // (e.g. Heaven's Light with 3, Aldur's Rhythm with 5)
         if (code === "sock" ) {
-            maxValue = Math.min(data[`${maxPrefix}${i}`], socketsByItemCode[data.item]);
+            const baseCode = data.code || data.item; // Unique: column code   Set: column item
+            maxValue = Math.min(data[`${maxPrefix}${i}`], socketsByItemCode[baseCode]);
         }
 
         if (minValue === maxValue) {
@@ -476,7 +478,7 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
         const skillLoc = code === "skill" && isRawParamNumber
             ? skillNameById[rawParam]
             : skillNameBySkill[rawParam];
-            
+
         const skillFullName = (typeof skillLoc === "object" ? skillLoc[lang] : skillLoc);
         const skillFullNameList = skillFullName?.split(/(?=[A-Z])/);
         const skillShortName = skillFullNameList?.length > 1
