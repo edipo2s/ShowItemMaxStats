@@ -473,7 +473,10 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             continue;
         }
 
-        const skillLoc = code === "skill" ? skillNameById[rawParam] : skillNameBySkill[rawParam];
+        const skillLoc = code === "skill" && isRawParamNumber
+            ? skillNameById[rawParam]
+            : skillNameBySkill[rawParam];
+            
         const skillFullName = (typeof skillLoc === "object" ? skillLoc[lang] : skillLoc);
         const skillFullNameList = skillFullName?.split(/(?=[A-Z])/);
         const skillShortName = skillFullNameList?.length > 1
