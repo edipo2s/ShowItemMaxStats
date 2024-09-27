@@ -68,6 +68,10 @@ const propIDByCode = propertiesItems.rows.reduce((acc, v) => {
     acc[v.code] = +idByStatsCode[v.stat1];
     return acc;
 }, {});
+const propIrrelevantByCode = propertiesItems.rows.reduce((acc, v) => {
+    acc[v.code] = ["Currently Not Used", "Visuals Only"].includes(v["*Notes"]);
+    return acc;
+}, {});
 
 const skillsFilePath = 'global\\excel\\skills.txt';
 const skillsItems = D2RMM.readTsv(skillsFilePath);
@@ -449,6 +453,11 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
 
     for (let i=1; i<=maxProps; i++) {
         const code = data[`${propPrefix}${i}`];
+
+        // Skip invalid props
+        if (propIrrelevantByCode[code]) {
+            continue;
+        }
 
         // Skip min max values for non ranged mods
         if (nonRangedProps.includes(propFuncByCode[code])) {
