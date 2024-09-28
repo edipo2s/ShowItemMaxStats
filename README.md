@@ -6,18 +6,25 @@ Show the max stats of items with ranged mods next to their name
 - Item ranged mods are sorted in the same order they appear on the item
 - Item mods and max values dynamically extracted from game data
 - Use abbreviations for mods that affect skill
-- Should work with modded items because values are not hardcoded
-- Highly configurable
+- Should work with modded items because values are not hardcoded (D2RMM version)
+- Highly configurable (D2RMM version)
   - Can disable individual items support (unique, sets, or bases)
   - Can choose between many colors
   - Can choose the position (bellow or above item name)
   - Can add some prefix text
 
 Installation:
+  - 1. Download and extract ShowItemMaxStats.zip to your Diablo II: Resurrected game folder.
+       Example: C:\Program Files (x86)\Diablo II Resurrected\Mods\ShowItemMaxStats
+  - 2. In Battle.net launcher, go to game settings for Diablo II: Resurrected & enable "Additional command line arguments", then paste this:
+       -mod ShowItemMaxStats -txt
+  - 3. Click Done
+  - 4. Start the game
 
-- Download and [install](https://www.nexusmods.com/diablo2resurrected/mods/169) D2RMM, then run it.
-- Download and extract the ShowItemMaxStats mod folder to /D2RMM/mods/
-- Click 'install mods'
+  - D2RMM
+    - 1. Download and [install](https://www.nexusmods.com/diablo2resurrected/mods/169) D2RMM, then run it.
+    - 2. Download ShowItemMaxStats-D2RR.zip and extract the ShowItemMaxStats mod folder to /D2RMM/mods/
+    - 3. Click 'install mods'
 
 My other mods:
 - [ColorUberKeys](https://github.com/edipo2s/ColorUberKeys)
