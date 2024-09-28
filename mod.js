@@ -473,6 +473,9 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
 
         const minValue = data[`${minPrefix}${i}`]
         let maxValue = data[`${maxPrefix}${i}`]
+        if (minValue === maxValue) {
+            continue;
+        }
 
         // Some items is configured to have more sockets than possible by its base
         // (e.g. Heaven's Light with 3, Aldur's Rhythm with 5)
@@ -480,7 +483,6 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             const baseCode = data.code || data.item; // Unique: column code   Set: column item
             maxValue = Math.min(data[`${maxPrefix}${i}`], socketsByItemCode[baseCode]);
         }
-
         if (minValue === maxValue) {
             continue;
         }
@@ -582,6 +584,7 @@ function formatUniqueItemName(text, maxStats) {
 
     const maxStatsText = `•${config.maxStatsPrefix}${maxStats}•`
 
+    // Its weird that \n works reversed here
     if (config.uniqueMaxStatsPosition == "bottom") {
         return `${maxStatsColor}${maxStatsText}\n${itemNameColor}${text}`;
     } else {
