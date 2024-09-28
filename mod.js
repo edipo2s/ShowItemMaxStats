@@ -504,7 +504,7 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             : skillFullName?.substring(0, 3);
 
         const skillId = code === "skill" 
-            ? +rawParam
+            ? isRawParamNumber ? +rawParam : +skillIdByCode[rawParam]
             : code === "oskill" ? +skillIdByCode[rawParam] : 0;
 
         // Store variable max value for min dmg
