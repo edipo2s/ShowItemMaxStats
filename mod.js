@@ -560,24 +560,34 @@ function formatBaseName(key, text) {
     const armorMaxDef = armorsMaxDefs[key]
     if (armorMaxDef) {
         const defStatsText = `•Def${armorMaxDef}•`
+        // not using \n to not mess up more with magic items name
         return `${text} ${maxStatsColor}${defStatsText}`
     }
 }
 
+// Its weird that \n works reversed here
 function formatSetItemName(text, maxStats) {
     const maxStatsColor = config.setsMaxStatsColor
 
     const itemNameColor = maxStatsColor ? setItemColor : ""
+    const itemOwnedIndicator = maxStatsColor ? "ø " : ""
     const usingBottomPosition = config.uniqueMaxStatsPosition == "bottom"
 
     const maxStatsText = `•${config.maxStatsPrefix}${maxStats}•`
     if (usingBottomPosition) {
-        return `${maxStatsColor}${maxStatsText}\n${itemNameColor}${text}`;
-    } else {
+        // ensure to always have the owned indicator
+        if (!maxStats) {
+            return `${itemOwnedIndicator}\n${itemNameColor}${text}`;
+        }
+        return `${itemOwnedIndicator}${maxStatsColor}${maxStatsText}\n${itemNameColor}${text}`;
+    } else if (maxStats) {
         return `${text}\n${maxStatsColor}${maxStatsText}`;
+    } else {
+        return text;
     }
 }
 
+// Its weird that \n works reversed here
 function formatUniqueItemName(text, maxStats) {
     const itemNameColor = uniqueItemColor
     if (!maxStats) {
@@ -588,7 +598,6 @@ function formatUniqueItemName(text, maxStats) {
     const maxStatsColor = config.maxStatsColor
     const maxStatsText = `•${config.maxStatsPrefix}${maxStats}•`
 
-    // Its weird that \n works reversed here
     if (config.uniqueMaxStatsPosition == "bottom") {
         return `${maxStatsColor}${maxStatsText}\n${itemNameColor}${text}`;
     } else {
@@ -621,10 +630,8 @@ function processItemName(item) {
         }
         if (isSetItem) {     
             const maxStats = getMaxStatsText(key, lang, setItemsByIndex, 9, "prop", "par", "min", "max");
-            if (maxStats.length) {
-                const maxStatsText = maxStats.join(statsSeparator);
-                item[lang] = formatSetItemName(item[lang], maxStatsText);
-            }
+            const maxStatsText = maxStats.join(statsSeparator);
+            item[lang] = formatSetItemName(item[lang], maxStatsText);
             continue;
         }
         if (isUniqueItem) {                

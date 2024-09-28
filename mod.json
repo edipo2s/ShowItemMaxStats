@@ -50,21 +50,21 @@
       "id": "setsMaxStatsColor",
       "type": "select",
       "name": "Max Stats Color for Set Items",
-      "description": "Changing the color will avoid missing set pieces name be colored as red when using position Bellow item's name",
-      "defaultValue": "",
+      "description": "Changing the color will make missing set pieces red name be replaced with ø symbol when using position Bellow item's name",
+      "defaultValue": "ÿc5",
       "options": [
-        { "label": "none", "value": "", "description": "Keep missing set pieces colored as red" },
-        { "label": "white", "value": "ÿc0" },
-        { "label": "red", "value": "ÿcS" },
-        { "label": "green", "value": "ÿc2" },
-        { "label": "blue", "value": "ÿc3" },
-        { "label": "light blue", "value": "ÿcT" },
-        { "label": "gold", "value": "ÿc4" },
-        { "label": "gray", "value": "ÿc5" },
-        { "label": "tan", "value": "ÿc7" },
-        { "label": "orange", "value": "ÿc8" },
-        { "label": "yellow", "value": "ÿc9" },
-        { "label": "purple", "value": "ÿc;" }
+        { "label": "none", "value": "", "description": "Keep missing set pieces names colored as red" },
+        { "label": "white", "value": "ÿc0", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "red", "value": "ÿcS", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "green", "value": "ÿc2", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "blue", "value": "ÿc3", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "light blue", "value": "ÿcT", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "gold", "value": "ÿc4", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "gray", "value": "ÿc5", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "tan", "value": "ÿc7", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "orange", "value": "ÿc8", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "yellow", "value": "ÿc9", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" },
+        { "label": "purple", "value": "ÿc;", "description": "Missing set pieces red name be replaced with ø symbol when using position Bellow item's name" }
       ]
     },
     {
@@ -87,7 +87,7 @@
         {
           "label": "Bellow item's name",
           "value": "bottom",
-          "description": "Set items will lose the missing set pieces red color if used with some Max Stats Color for Set Items"
+          "description": "Set items will have the missing set pieces red color replaced with ø symbol if used with some Max Stats Color for Set Items"
         }
       ]
     }
