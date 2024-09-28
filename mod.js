@@ -580,15 +580,19 @@ function formatSetItemName(text, maxStats) {
 
 function formatUniqueItemName(text, maxStats) {
     const itemNameColor = uniqueItemColor
-    const maxStatsColor = config.maxStatsColor
+    if (!maxStats) {
+        // Ensure to use unique color since base def can change it
+        return `${uniqueItemColor}${text}`;
+    }
 
+    const maxStatsColor = config.maxStatsColor
     const maxStatsText = `•${config.maxStatsPrefix}${maxStats}•`
 
     // Its weird that \n works reversed here
     if (config.uniqueMaxStatsPosition == "bottom") {
         return `${maxStatsColor}${maxStatsText}\n${itemNameColor}${text}`;
     } else {
-        return `${text}\n${maxStatsColor}${maxStatsText}`;
+        return `${itemNameColor}${text}\n${maxStatsColor}${maxStatsText}`;
     }
     return text;
 }
@@ -625,10 +629,8 @@ function processItemName(item) {
         }
         if (isUniqueItem) {                
             const maxStats = getMaxStatsText(key, lang, uniqueItemsByIndex, 12, "prop", "par", "min", "max");
-            if (maxStats.length) {
-                const maxStatsText = maxStats.join(statsSeparator);
-                item[lang] = formatUniqueItemName(item[lang], maxStatsText);
-            }
+            const maxStatsText = maxStats.join(statsSeparator);
+            item[lang] = formatUniqueItemName(item[lang], maxStatsText);
             continue;
         }
     }
