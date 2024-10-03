@@ -3,7 +3,7 @@
   "description": "Show max stats info bellow item names.",
   "author": "edipo2s",
   "website": "https://www.nexusmods.com/diablo2resurrected/mods/542",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "config": [
     {
       "id": "basesEnabled",

@@ -1,5 +1,9 @@
 const skillNamesFilename = 'local\\lng\\strings\\skills.json';
 const skillNames = D2RMM.readJson(skillNamesFilename);
+const skillNameByKey = skillNames.reduce((acc, v) => {
+    acc[v.Key] = v;
+    return acc;
+}, {});
 
 const armorsFilePath = 'global\\excel\\armor.txt';
 const armorItems = D2RMM.readTsv(armorsFilePath);
@@ -407,6 +411,30 @@ const statsCodeMap = {
     "charge-noconsume": "CnotCC"
 }
 
+const skillTabTextByCode = {
+    0: "SkillCategoryAm1",
+    1: "SkillCategoryAm2",
+    2: "SkillCategoryAm3",
+    3: "SkillCategorySo1",
+    4: "SkillCategorySo2",
+    5: "SkillCategorySo3",
+    6: "SkillCategoryNe1",
+    7: "SkillCategoryNe2",
+    8: "SkillCategoryNe3",
+    9: "SkillCategoryPa1",
+    10: "SkillCategoryPa2",
+    11: "SkillCategoryPa3",
+    12: "SkillCategoryBa1",
+    13: "SkillCategoryBa2",
+    14: "SkillCategoryBa3",
+    15: "SkillCategoryDr1",
+    16: "SkillCategoryDr2",
+    17: "SkillCategoryDr3",
+    18: "SkillCategoryAs1",
+    19: "SkillCategoryAs2",
+    20: "SkillCategoryAs3",
+}
+
 const negativeStats = [
     "pierce-fire",
     "pierce-ltng",
@@ -489,13 +517,16 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
 
         const rawParam = data[`${paramPrefix}${i}`]
         const isRawParamNumber = !Number.isNaN(Number.parseInt(rawParam, 10));
-        if (rawParam && isRawParamNumber && code !== "skill") {
+        if (rawParam && isRawParamNumber && !["skill", "skilltab"].includes(code) ) {
             continue;
         }
 
-        const skillLoc = code === "skill" && isRawParamNumber
-            ? skillNameById[rawParam]
+        const skillLoc = ["skill", "skilltab"].includes(code) && isRawParamNumber
+            ? code === "skill" ? skillNameById[rawParam] : skillNameByKey[skillTabTextByCode[rawParam]]
             : skillNameBySkill[rawParam];
+
+        if (key === "Demonhorn's Edge")
+            console.log({text: skillTabTextByCode[rawParam], skillLoc, rawParam})
 
         const skillFullName = (typeof skillLoc === "object" ? skillLoc[lang] : skillLoc);
         const skillFullNameList = skillFullName?.split(/(?=[A-Z])/);
@@ -503,9 +534,13 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             ? skillFullNameList.map(v => v[0]).join("") 
             : skillFullName?.substring(0, 3);
 
-        const skillId = code === "skill" 
-            ? isRawParamNumber ? +rawParam : +skillIdByCode[rawParam]
-            : code === "oskill" ? +skillIdByCode[rawParam] : 0;
+        const skillId = code === "skill"
+            ? isRawParamNumber
+                ? +rawParam
+                : +skillIdByCode[rawParam]
+            : code === "oskill"
+                ? +skillIdByCode[rawParam]
+            : code === "skilltab" ? 20 - rawParam : 0;
 
         // Store variable max value for min dmg
         if (code.endsWith("-min")) {
