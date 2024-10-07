@@ -83,6 +83,7 @@ const skillDescFilePath = 'global\\excel\\skilldesc.txt';
 const skillDescItems = D2RMM.readTsv(skillDescFilePath);
 const skillIdByCode = skillsItems.rows.reduce((acc, v) => {
     acc[v.skill] = v["*Id"];
+    acc[v.skill.toLowerCase()] = v["*Id"];
     return acc;
 }, {});
 const skillNameById = skillsItems.rows.reduce((acc, v) => {
@@ -100,8 +101,10 @@ const skillNameBySkill = skillsItems.rows.reduce((acc, v) => {
     if (skillDesc) {
         const skillName = skillDesc["str name"];
         acc[v.skill] = skillNames.find(s => s["Key"] === skillName);
+        acc[v.skill.toLowerCase()] = skillNames.find(s => s["Key"] === skillName);
     } else {
         acc[v.skill] = v.skill;
+        acc[v.skill.toLowerCase()] = v.skill;
     }
     return acc;
 }, {});
@@ -524,9 +527,6 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
         const skillLoc = ["skill", "skilltab"].includes(code) && isRawParamNumber
             ? code === "skill" ? skillNameById[rawParam] : skillNameByKey[skillTabTextByCode[rawParam]]
             : skillNameBySkill[rawParam];
-
-        if (key === "Demonhorn's Edge")
-            console.log({text: skillTabTextByCode[rawParam], skillLoc, rawParam})
 
         const skillFullName = (typeof skillLoc === "object" ? skillLoc[lang] : skillLoc);
         const skillFullNameList = skillFullName?.split(/(?=[A-Z])/);
