@@ -412,27 +412,27 @@ const statsCodeMap = {
 }
 
 const skillTabTextByCode = {
-    0: "SkillCategoryAm2",
-    1: "SkillCategoryAm3",
-    2: "SkillCategoryAm1",
-    3: "SkillCategorySo3",
-    4: "SkillCategorySo2",
-    5: "SkillCategorySo1",
-    6: "SkillCategoryNe1",
-    7: "SkillCategoryNe2",
-    8: "SkillCategoryNe3",
-    9: "SkillCategoryPa3",
-    10: "SkillCategoryPa1",
-    11: "SkillCategoryPa2",
-    12: "SkillCategoryBa1",
-    13: "SkillCategoryBa2",
-    14: "SkillCategoryBa3",
-    15: "SkillCategoryDr2",
-    16: "SkillCategoryDr1",
-    17: "SkillCategoryDr3",
-    18: "SkillCategoryAs3",
-    19: "SkillCategoryAs1",
-    20: "SkillCategoryAs2",
+    0: "SkillCategoryAm3",  // Bow and Crossbow
+    1: "SkillCategoryAm2",  // Passive and Magic
+    2: "SkillCategoryAm1",  // Javelin and Spear
+    3: "SkillCategorySo3",  // Fire Spells
+    4: "SkillCategorySo2",  // Lightning Spells
+    5: "SkillCategorySo1",  // Cold Spells
+    6: "SkillCategoryNe3",  // Curses
+    7: "SkillCategoryNe2",  // Poison and Bone
+    8: "SkillCategoryNe1",  // Summoning
+    9: "SkillCategoryPa3",  // Combat Skills
+    10: "SkillCategoryPa2", // Offensive Auras
+    11: "SkillCategoryPa1", // Defensive Auras
+    12: "SkillCategoryBa3", // Combat Skills
+    13: "SkillCategoryBa2", // Combat Masteries
+    14: "SkillCategoryBa1", // Warcries
+    15: "SkillCategoryDr3", // Summoning
+    16: "SkillCategoryDr2", // Shape Shifting
+    17: "SkillCategoryDr1", // Elemental
+    18: "SkillCategoryAs3", // Traps
+    19: "SkillCategoryAs2", // Shadow Discipline
+    20: "SkillCategoryAs1", // Martial Arts
 }
 
 const negativeStats = [
@@ -540,7 +540,7 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
                 : +skillIdByCode[rawParam]
             : code === "oskill"
                 ? +skillIdByCode[rawParam]
-            : code === "skilltab" ? 20 - rawParam : 0;
+            : code === "skilltab" ? rawParam : 0;
 
         // Store variable max value for min dmg
         if (code.endsWith("-min")) {
