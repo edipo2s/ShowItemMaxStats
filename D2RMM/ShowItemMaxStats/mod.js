@@ -131,8 +131,8 @@ const statsSeparator = "/"
 
 const statsCodeMap = {
     "ac": "Def",
-    "ac-hth": "DefMi",
-    "ac-miss": "DefMe",
+    "ac-hth": "DefMe",
+    "ac-miss": "DefMi",
     "red-dmg": "DR",
     "red-dmg%": "%DR",
     "ac%": "ED",
