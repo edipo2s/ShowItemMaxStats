@@ -7,15 +7,15 @@ const skillNameByKey = skillNames.reduce((acc, v) => {
 
 const armorsFilePath = 'global\\excel\\armor.txt';
 const armorItems = D2RMM.readTsv(armorsFilePath);
-const armorsMaxDefs = armorItems.rows.reduce((acc, v) => {
-  acc[v.code] = v.maxac;
+const armorsByCode = armorItems.rows.reduce((acc, v) => {
+  acc[v.code] = v;
   return acc;
 }, {});
 
 const weaponsFilePath = 'global\\excel\\weapons.txt';
 const weaponsItems = D2RMM.readTsv(weaponsFilePath);
-const socketsByItemCode = (weaponsItems.rows.concat(armorItems.rows)).reduce((acc, v) => {
-    acc[v.code] = v.gemsockets;
+const weaponsByCode = weaponsItems.rows.reduce((acc, v) => {
+    acc[v.code] = v;
     return acc;
 }, {});
 
@@ -512,7 +512,12 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
         // (e.g. Heaven's Light with 3, Aldur's Rhythm with 5)
         if (code === "sock" ) {
             const baseCode = data.code || data.item; // Unique: column code   Set: column item
-            maxValue = Math.min(data[`${maxPrefix}${i}`], socketsByItemCode[baseCode]);
+            maxValue = Math.min(
+                data[`${maxPrefix}${i}`],
+                weaponsByCode[baseCode]
+                    ? weaponsByCode[baseCode].gemsockets
+                    : armorsByCode[baseCode].gemsockets
+            );
         }
         if (minValue === maxValue) {
             continue;
@@ -590,14 +595,51 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
 }
 
 function formatBaseName(key, text) {
-    const maxStatsColor = config.maxStatsColor
+    const isWeapon = key in weaponsByCode;
+    const baseData = isWeapon ? weaponsByCode[key] : armorsByCode[key];
+    const maxStatsColor = config.maxStatsColor;
 
-    const armorMaxDef = armorsMaxDefs[key]
+    let armorMaxText = "";
+    const armorMaxDef = baseData.maxac;
     if (armorMaxDef) {
-        const defStatsText = `•Def${armorMaxDef}•`
-        // not using \n to not mess up more with magic items name
-        return `${text} ${maxStatsColor}${defStatsText}`
+        armorMaxText = `Def(${armorMaxDef})`;
     }
+
+    let armorWeight = "";
+    let weaponSpeed = "";
+    let weaponRange = "";
+    let qualitySuffix = "";
+
+    if (config.basesInfoEnabled) {
+        if (isWeapon) {
+            if (baseData.speed) {
+                weaponSpeed = `S(${+baseData.speed > 0 ? "+" : ""}${baseData.speed})`;                
+            }
+            if (baseData.rangeadder) {
+                weaponRange = `R(+${baseData.rangeadder})`;
+            }
+        } else {
+            if (baseData.speed !== "0") {
+                armorWeight = `S(-${baseData.speed}%)`;
+            }
+        }
+
+        qualitySuffix = " Q(n)";
+        if (baseData.code === baseData.ubercode) {
+            qualitySuffix = " ÿcNQ(x)";
+        }
+        if (baseData.code === baseData.ultracode) {
+            qualitySuffix = " ÿc;Q(e)";
+        }
+    }
+
+    // not using \n to not mess up more with magic items name
+    const infoText = [armorWeight, armorMaxText, weaponSpeed, weaponRange].join(" ").trim()
+    const infoSuffix = infoText
+        ? ` ${maxStatsColor}${infoText}`
+        : "";
+
+    return text + infoSuffix + qualitySuffix;
 }
 
 // Its weird that \n works reversed here
@@ -644,11 +686,14 @@ function formatUniqueItemName(text, maxStats) {
 function processItemName(item) {
     const id = item["id"];
     const key = item["Key"];
-    const isBaseName = !!armorsMaxDefs[key]
-    const isSetItem = Object.keys(setItemsByIndex).includes(key)
-    const isUniqueItem = Object.keys(uniqueItemsByIndex).includes(key)
+    const isBaseArmor = !!armorsByCode[key];
+    const isBaseWeapon = !!weaponsByCode[key];
 
-    if (key in armorsMaxDefs && !config.basesEnabled) {
+    const isBaseItem = isBaseArmor || isBaseWeapon;
+    const isSetItem = Object.keys(setItemsByIndex).includes(key);
+    const isUniqueItem = Object.keys(uniqueItemsByIndex).includes(key);
+
+    if (isBaseItem && !config.basesEnabled) {
         return; 
     }
     if (isSetItem && !config.setsEnabled) {
@@ -659,7 +704,7 @@ function processItemName(item) {
     }
 
     for (let lang of langs) {
-        if (isBaseName) {
+        if (isBaseItem) {
             item[lang] = formatBaseName(key, item[lang]);
             continue;
         }

@@ -6,6 +6,13 @@
   "version": "1.0.4",
   "config": [
     {
+      "id": "basesInfoEnabled",
+      "type": "checkbox",
+      "name": "Show extra info for bases",
+      "description": "Show extra info of the Base type like weight for armors, speed and range for weapons and quality for both",
+      "defaultValue": true
+    },
+    {
       "id": "basesEnabled",
       "type": "checkbox",
       "name": "Show max def for armors Base type",
