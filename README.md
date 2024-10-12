@@ -2,7 +2,7 @@ Show the max stats of items with ranged mods next to their name
 ![Screenshot 2024-09-28 100909 - Copy](https://github.com/user-attachments/assets/04a920e6-473a-4b5f-8711-c241f9d278c2)
 
 - Show max value for ranged mods of Uniques, Sets and Runewords
-- Show max Defense for Bases
+- Show max Defense, Weight, Speed and Range for Bases
 - Item ranged mods are sorted in the same order they appear on the item
 - Item mods and max values dynamically extracted from game data
 - Use abbreviations for mods that affect skill
