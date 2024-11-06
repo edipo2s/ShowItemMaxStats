@@ -504,21 +504,27 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
             continue;
         }
 
-        const minValue = data[`${minPrefix}${i}`]
+        let minValue = data[`${minPrefix}${i}`]
         let maxValue = data[`${maxPrefix}${i}`]
         if (minValue === maxValue) {
             continue;
         }
 
+        const baseCode = data.code || data.item; // Unique: column code   Set: column item
+        const baseItem = weaponsByCode[baseCode] || armorsByCode[baseCode]
+
+        // All scepter bases have 50% dmg-undead that affects the same for max stats e.g. Rusthandle
+        if (code == "dmg-undead" && baseItem?.type == "scep") {
+            minValue = +minValue + 50;
+            maxValue = +maxValue + 50;
+        }
+
         // Some items is configured to have more sockets than possible by its base
         // (e.g. Heaven's Light with 3, Aldur's Rhythm with 5)
         if (code === "sock" ) {
-            const baseCode = data.code || data.item; // Unique: column code   Set: column item
             maxValue = Math.min(
                 data[`${maxPrefix}${i}`],
-                weaponsByCode[baseCode]
-                    ? weaponsByCode[baseCode].gemsockets
-                    : armorsByCode[baseCode].gemsockets
+                baseItem.gemsockets
             );
         }
         if (minValue === maxValue) {
