@@ -453,6 +453,8 @@ const propItemModsSetParam = 17;
 const propItemModsSetChargedSkill = 19;
 const propItemModsSetValueRegPropValParamSwapped = 36;
 
+const nonRangedCodes = ["cold-len", "pois-len", "res-pois-len"]
+
 const nonRangedProps = [
     propItemModsSetSkillOnAttack,
     propItemModsSetMin,
@@ -498,7 +500,7 @@ function getMaxStatsText(key, lang, itemDB, maxProps, propPrefix, paramPrefix, m
         }
 
         // Skip min max values for non ranged mods
-        if (nonRangedProps.includes(propFuncByCode[code])) {
+        if (nonRangedProps.includes(propFuncByCode[code]) || nonRangedCodes.includes(code)) {
             continue;
         }
 
