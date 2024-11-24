@@ -621,7 +621,12 @@ function formatBaseName(key, text) {
     if (config.basesInfoEnabled) {
         if (isWeapon) {
             if (baseData.speed) {
-                weaponSpeed = `S(${+baseData.speed > 0 ? "+" : ""}${baseData.speed})`;                
+                // Invert signal to change speed penalty to extra speed
+                if (config.basesInverseSpeedEnabled) {                    
+                    weaponSpeed = `S(${+baseData.speed > 0 ? "-" : "+"}${baseData.speed.replace("-", "")})`;                
+                } else {
+                    weaponSpeed = `S(${+baseData.speed > 0 ? "+" : ""}${baseData.speed})`;   
+                }
             }
             if (baseData.rangeadder) {
                 weaponRange = `R(+${baseData.rangeadder})`;

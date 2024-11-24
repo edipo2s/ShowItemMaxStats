@@ -6,6 +6,13 @@
   "version": "1.1.1",
   "config": [
     {
+      "id": "basesEnabled",
+      "type": "checkbox",
+      "name": "Show max def for armors Base type",
+      "description": "Show max defense value for the base armor type. Side effect: will be in the middle of magic's item name.",
+      "defaultValue": true
+    },
+    {
       "id": "basesInfoEnabled",
       "type": "checkbox",
       "name": "Show extra info for bases",
@@ -13,10 +20,10 @@
       "defaultValue": true
     },
     {
-      "id": "basesEnabled",
+      "id": "basesInverseSpeedEnabled",
       "type": "checkbox",
-      "name": "Show max def for armors Base type",
-      "description": "Show max defense value for the base armor type. Side effect: will be in the middle of magic's item name.",
+      "name": "Show base speed inversed",
+      "description": "Speed values are coded as 'Speed Penalty', this will multiply them by -1 so the value becomes 'Speed Bonus'. e.g. Greater Talons will show +30 speed instead of -30 speed penalty.",
       "defaultValue": true
     },
     {
